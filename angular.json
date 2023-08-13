@@ -100,8 +100,59 @@
             ],
             "scripts": []
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "kata-angular:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kata-angular:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "ct": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "kata-angular:serve",
+            "watch": true,
+            "headless": false,
+            "testingType": "component"
+          },
+          "configurations": {
+            "development": {
+              "devServerTarget": "kata-angular:serve:development"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "kata-angular:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kata-angular:serve:production"
+            }
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@schematics/angular"
+    ]
   }
 }
