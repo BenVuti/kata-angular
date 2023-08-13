@@ -78,6 +78,19 @@ describe('Step1Component', () => {
 
   // the "next" button should be disabled if the form is invalid
   it('should disable the "next" button if the form is invalid', () => {
+    const form = component.form;
+    form.setValue({
+      civility: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+    });
+
+    expect(form.valid)
+      .withContext(form.get('phoneNumber')?.value)
+      .toBeFalsy();
+
     const button = fixture.nativeElement.querySelector('button');
     expect(button.disabled).toBeTruthy();
   });
@@ -104,7 +117,6 @@ describe('Step1Component', () => {
   it('should invalidate invalid phone number formats', () => {
     const phoneNumberControl = component.form.get('phoneNumber');
 
-    // Test invalid formats
     phoneNumberControl?.setValue('1234'); // Too short
     expect(phoneNumberControl?.valid).toBeFalsy();
 
@@ -113,7 +125,30 @@ describe('Step1Component', () => {
 
     phoneNumberControl?.setValue('abc1234567'); // Contains non-digit characters
     expect(phoneNumberControl?.valid).toBeFalsy();
+  });
 
-    // Add more invalid formats to test
+  it('should submit the form when valid', () => {
+    spyOn(console, 'log');
+    const submitButton = fixture.nativeElement.querySelector(
+      'button[type="submit"]'
+    );
+
+    component.form.patchValue({
+      civility: 'mr',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      phoneNumber: '1234567890',
+    });
+
+    fixture.detectChanges();
+
+    submitButton.click();
+    fixture.detectChanges();
+
+    expect(console.log).toHaveBeenCalledWith(
+      'Form step 1 submitted:',
+      component.form.value
+    );
   });
 });
