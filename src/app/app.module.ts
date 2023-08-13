@@ -6,10 +6,26 @@ import { AppComponent } from './app.component';
 import { Step1Component } from './step1/step1.component';
 import { Step2Component } from './step2/step2.component';
 import { Step3Component } from './step3/step3.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+} from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent, Step1Component, Step2Component, Step3Component],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

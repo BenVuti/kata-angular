@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormDataService } from 'src/services/form-data.service';
 
 @Component({
   selector: 'app-step1',
@@ -6,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./step1.component.scss'],
 })
 export class Step1Component implements OnInit {
-  constructor() {}
+  form!: FormGroup;
 
-  ngOnInit(): void {}
+  constructor(
+    private fb: FormBuilder,
+    private formDataService: FormDataService
+  ) {}
+
+  ngOnInit(): void {
+    this.form = this.formDataService.formData.get('step1') as FormGroup;
+  }
 }
