@@ -1,1 +1,66 @@
-<p>step2 works!</p>
+<form [formGroup]="form" (ngSubmit)="onNextClick()" class="kata-form">
+  <h2>Bonjour {{ person.firstName }} {{ person.lastName }} !</h2>
+  <span>Parlez-nous de votre projet</span>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Propriétaire / Locataire ?</mat-label>
+      <mat-select formControlName="ownershipStatus">
+        <mat-option value="owner">Propriétaire</mat-option>
+        <mat-option value="tenant">Locataire</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Nombre de personnes dans le foyer</mat-label>
+      <input matInput type="number" formControlName="householdSize" />
+      <mat-error *ngIf="form.get('householdSize')?.hasError('required')">
+        Ce champ est requis
+      </mat-error>
+      <mat-error *ngIf="form.get('householdSize')?.hasError('min')">
+        Doit être au moins 1
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Les revenus du foyer (entre 10k et 100k)</mat-label>
+      <input matInput type="number" formControlName="householdIncome" />
+      <mat-error *ngIf="form.get('householdIncome')?.hasError('required')">
+        Ce champ est requis
+      </mat-error>
+      <mat-error *ngIf="form.get('householdIncome')?.hasError('min')">
+        Doit être au moins 10000
+      </mat-error>
+      <mat-error *ngIf="form.get('householdIncome')?.hasError('max')">
+        Doit être au maximum 100000
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>La surface du bien (m2)</mat-label>
+      <input matInput type="number" formControlName="propertySize" />
+      <mat-error *ngIf="form.get('propertySize')?.hasError('required')">
+        Ce champ est requis
+      </mat-error>
+      <mat-error *ngIf="form.get('propertySize')?.hasError('min')">
+        Doit être au moins 1
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid">
+      Next
+    </button>
+  </div>
+</form>
