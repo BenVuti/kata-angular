@@ -9,6 +9,8 @@ import {
   MatInputModule,
 } from '@angular/material';
 import { Step2Component } from './step2.component';
+import { MockFormDataService } from 'src/services/mocks/mock-form-data.service';
+import { FormDataService } from 'src/services/form-data.service';
 
 describe('Step2Component', () => {
   let component: Step2Component;
@@ -25,7 +27,10 @@ describe('Step2Component', () => {
         MatInputModule,
         MatFormFieldModule,
       ],
-      providers: [FormBuilder],
+      providers: [
+        FormBuilder,
+        { provide: FormDataService, useClass: MockFormDataService },
+      ],
     }).compileComponents();
   }));
 

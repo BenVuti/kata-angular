@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Step3Component } from './step3.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBuilder } from '@angular/forms';
+import { FormDataService } from 'src/services/form-data.service';
+import { MockFormDataService } from 'src/services/mocks/mock-form-data.service';
 
 describe('Step3Component', () => {
   let component: Step3Component;
@@ -11,7 +13,10 @@ describe('Step3Component', () => {
     TestBed.configureTestingModule({
       declarations: [Step3Component],
       imports: [NoopAnimationsModule],
-      providers: [FormBuilder],
+      providers: [
+        FormBuilder,
+        { provide: FormDataService, useClass: MockFormDataService },
+      ],
     }).compileComponents();
   }));
   beforeEach(() => {

@@ -12,26 +12,26 @@ import { Project } from 'src/models/project.model';
 @Injectable({
   providedIn: 'root',
 })
-export class FormDataService {
+export class MockFormDataService {
   formData: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.formData = this.fb.group({
       step1: this.fb.group({
-        civility: ['', Validators.required],
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        phoneNumber: ['', Validators.required, phoneNumberValidator],
+        civility: ['mr', Validators.required],
+        firstName: ['a', Validators.required],
+        lastName: ['a', Validators.required],
+        email: ['a@a.com', [Validators.required, Validators.email]],
+        phoneNumber: ['0123456789', Validators.required, phoneNumberValidator],
       }),
       step2: this.fb.group({
-        ownershipStatus: ['', Validators.required],
-        householdSize: ['', [Validators.required, Validators.min(1)]],
+        ownershipStatus: ['owner', Validators.required],
+        householdSize: [3, [Validators.required, Validators.min(1)]],
         householdIncome: [
-          '',
+          51234.35,
           [Validators.required, Validators.min(10000), Validators.max(100000)],
         ],
-        propertySize: ['', [Validators.required, Validators.min(1)]],
+        propertySize: [10.2666666, [Validators.required, Validators.min(1)]],
       }),
     });
   }
