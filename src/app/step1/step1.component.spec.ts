@@ -54,7 +54,7 @@ describe('Step1Component', () => {
 
   it('should validate form fields', () => {
     const form = component.form;
-    form.setValue({
+    form.patchValue({
       civility: 'mr',
       firstName: 'John',
       lastName: 'Doe',
@@ -64,7 +64,7 @@ describe('Step1Component', () => {
     expect(form.valid).toBeTruthy();
 
     // Test invalid values
-    form.setValue({
+    form.patchValue({
       civility: '',
       firstName: '',
       lastName: '',
@@ -76,23 +76,26 @@ describe('Step1Component', () => {
     expect(form.get('civility')?.hasError('required')).toBeTruthy();
   });
 
-  // the "next" button should be disabled if the form is invalid
-  it('should disable the "next" button if the form is invalid', () => {
-    const form = component.form;
-    form.setValue({
+  it('should not submit the form when invalid', () => {
+    spyOn(console, 'log');
+    const submitButton = fixture.nativeElement.querySelector(
+      'button[type="submit"]'
+    );
+
+    component.form.patchValue({
       civility: '',
       firstName: '',
       lastName: '',
-      email: '',
+      email: 'invalidemail',
       phoneNumber: '',
     });
 
-    expect(form.valid)
-      .withContext(form.get('phoneNumber')?.value)
-      .toBeFalsy();
+    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toBeTruthy();
+    submitButton.click();
+    fixture.detectChanges();
+
+    expect(console.log).not.toHaveBeenCalled();
   });
 
   it('should validate valid phone number formats', () => {

@@ -1,1 +1,34 @@
-<p>step3 works!</p>
+<div class="kata-container">
+  <div class="greeting">
+    Merci
+    {{ person.civility | titlecase }} {{ person.firstName }}
+    {{ person.lastName }} !
+  </div>
+
+  <div
+    *ngIf="project.ownershipStatus === 'owner'; else notEligible"
+    class="project-info">
+    <div class="project-price">
+      Le montant nécessaire à la réalisation de votre projet est de
+      {{ projectPrice | currency: 'EUR' : true }}.
+    </div>
+    <div
+      *ngIf="effyFundingAmount > 0; else negativeFunding"
+      class="project-help">
+      Effy vous propose une aide de
+      {{ effyFundingAmount | currency: 'EUR' : true }}.
+    </div>
+  </div>
+
+  <ng-template #notEligible>
+    <div class="project-info">
+      Vous n'êtes malheureusement pas éligible à notre offre.
+    </div>
+  </ng-template>
+  <ng-template #negativeFunding>
+    <div class="project-help">
+      Nous ne pouvons malheureusement pas participer au financement de votre
+      projet.
+    </div>
+  </ng-template>
+</div>

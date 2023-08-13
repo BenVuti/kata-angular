@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Observable, of, map } from 'rxjs';
 import { Person } from 'src/models/person.model';
+import { Project } from 'src/models/project.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,15 +26,14 @@ export class FormDataService {
         phoneNumber: ['0123456789', Validators.required, phoneNumberValidator],
       }),
       step2: this.fb.group({
-        ownershipStatus: ['', Validators.required],
-        householdSize: [null, [Validators.required, Validators.min(1)]],
+        ownershipStatus: ['owner', Validators.required],
+        householdSize: [3, [Validators.required, Validators.min(1)]],
         householdIncome: [
-          null,
+          51234.35,
           [Validators.required, Validators.min(10000), Validators.max(100000)],
         ],
-        propertySize: [null, [Validators.required, Validators.min(1)]],
+        propertySize: [10.2666666, [Validators.required, Validators.min(1)]],
       }),
-      step3: this.fb.group({}),
     });
   }
 
@@ -45,6 +45,16 @@ export class FormDataService {
       lastName: step1.get('lastName')?.value,
       email: step1.get('email')?.value,
       phoneNumber: step1.get('phoneNumber')?.value,
+    };
+  }
+
+  getProject(): Project {
+    const step2 = this.formData.get('step2') as FormGroup;
+    return {
+      ownershipStatus: step2.get('ownershipStatus')?.value,
+      householdSize: step2.get('householdSize')?.value,
+      householdIncome: step2.get('householdIncome')?.value,
+      propertySize: step2.get('propertySize')?.value,
     };
   }
 }
