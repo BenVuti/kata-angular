@@ -13,10 +13,12 @@ import {
   MatInputModule,
   MatSelectModule,
 } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, Step1Component, Step2Component, Step3Component],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

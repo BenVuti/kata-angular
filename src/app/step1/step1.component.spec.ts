@@ -81,4 +81,39 @@ describe('Step1Component', () => {
     const button = fixture.nativeElement.querySelector('button');
     expect(button.disabled).toBeTruthy();
   });
+
+  it('should validate valid phone number formats', () => {
+    const phoneNumberControl = component.form.get('phoneNumber');
+
+    phoneNumberControl?.setValue('1234567890');
+    expect(phoneNumberControl?.valid)
+      .withContext('1234567890')
+      .toBeTruthy();
+
+    phoneNumberControl?.setValue('(123) 456-7890');
+    expect(phoneNumberControl?.valid)
+      .withContext('(123) 456-7890')
+      .toBeTruthy();
+
+    phoneNumberControl?.setValue('+33123456789');
+    expect(phoneNumberControl?.valid)
+      .withContext('+33123456789')
+      .toBeTruthy();
+  });
+
+  it('should invalidate invalid phone number formats', () => {
+    const phoneNumberControl = component.form.get('phoneNumber');
+
+    // Test invalid formats
+    phoneNumberControl?.setValue('1234'); // Too short
+    expect(phoneNumberControl?.valid).toBeFalsy();
+
+    phoneNumberControl?.setValue('123456789012345'); // Too long
+    expect(phoneNumberControl?.valid).toBeFalsy();
+
+    phoneNumberControl?.setValue('abc1234567'); // Contains non-digit characters
+    expect(phoneNumberControl?.valid).toBeFalsy();
+
+    // Add more invalid formats to test
+  });
 });
